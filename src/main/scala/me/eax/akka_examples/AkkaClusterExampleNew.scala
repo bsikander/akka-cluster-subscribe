@@ -5,15 +5,14 @@ import akka.actor._
 import akka.event._
 import akka.cluster._
 
-class ClusterListener extends Actor with ActorLogging {
+class ClusterListenerNew extends Actor with ActorLogging {
 
   val cluster = Cluster(context.system)
 
   // subscribe to cluster changes, re-subscribe when restart
   override def preStart() {
-    cluster.join(cluster.selfAddress)
-    //cluster.join(AddressFromURIString("akka.tcp://system@127.0.0.1:54332"))
-    //cluster.subscribe(self, classOf[MemberEvent])
+    cluster.join(AddressFromURIString("akka.tcp://system@127.0.0.1:2551"))
+    cluster.subscribe(self, classOf[MemberEvent])
   }
 
   override def postStop() {
@@ -29,8 +28,8 @@ class ClusterListener extends Actor with ActorLogging {
   }
 }
 
-object AkkaClusterExample extends App {
+object AkkaClusterExampleNew extends App {
   val system = ActorSystem("system")
-  system.actorOf(Props[ClusterListener], "clusterListener")
+  system.actorOf(Props[ClusterListenerNew], "clusterListener")
   system.awaitTermination()
 }
