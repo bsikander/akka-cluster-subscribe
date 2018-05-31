@@ -12,7 +12,7 @@ class ClusterListener extends Actor with ActorLogging {
   // subscribe to cluster changes, re-subscribe when restart
   override def preStart() {
     cluster.join(cluster.selfAddress)
-    //cluster.join(AddressFromURIString("akka.tcp://system@127.0.0.1:54332"))
+    //cluster.join(AddressFromURIString("akka.tcp://system@127.0.0.1:51188"))
     //cluster.subscribe(self, classOf[MemberEvent])
   }
 
